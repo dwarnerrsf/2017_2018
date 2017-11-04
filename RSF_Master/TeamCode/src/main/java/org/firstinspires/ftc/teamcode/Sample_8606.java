@@ -15,7 +15,7 @@ public class Sample_8606 extends BaseOp {
 
     @Override
     public void init() {
-        _driveModule.initialize(hardwareMap);
+        initialize();
 
         _extender.initialize(hardwareMap, "extender", DcMotorSimple.Direction.FORWARD);
         _extender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
