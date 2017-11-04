@@ -4,12 +4,14 @@ import org.firstinspires.ftc.teamcode.Modules.MotorModule;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
 @TeleOp(name="8606 Sample", group="Pushbot")
 public class Sample_8606 extends BaseOp {
     private MotorModule _extender = new MotorModule();
     private MotorModule _retractor = new MotorModule();
+    private Servo _claw = null;
 
     @Override
     public void init() {
@@ -26,6 +28,9 @@ public class Sample_8606 extends BaseOp {
 
         _extender.setPower(0.0d);
         _retractor.setPower(0.0d);
+
+        _claw = hardwareMap.get(Servo.class, "claw");
+        _claw.setPosition(0.90d);
     }
 
     @Override
@@ -52,6 +57,16 @@ public class Sample_8606 extends BaseOp {
         else {
             _extender.setPower(0.0d);
             _retractor.setPower(0.0d);
+        }
+
+        if (gamepad2.dpad_up) {
+            _claw.setPosition(0.0d);
+        }
+        else if (gamepad2.dpad_down) {
+            _claw.setPosition(0.90d);
+        }
+        else {
+
         }
 
         _driveModule.move(gamepad1);

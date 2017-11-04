@@ -14,7 +14,6 @@ public class BaseOp extends OpMode {
      */
     @Override
     public void init() {
-        _driveModule.initialize(hardwareMap);
     }
 
     /*
@@ -43,5 +42,9 @@ public class BaseOp extends OpMode {
      */
     @Override
     public void stop() {
+    }
+
+    protected void initialize() {
+        _driveModule.initialize(hardwareMap);
     }
 }
