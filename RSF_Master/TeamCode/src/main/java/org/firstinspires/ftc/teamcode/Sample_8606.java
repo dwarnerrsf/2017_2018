@@ -12,6 +12,7 @@ public class Sample_8606 extends BaseOp {
     private MotorModule _extender = new MotorModule();
     private MotorModule _retractor = new MotorModule();
     private Servo _claw = null;
+    private Servo _gripper = null;
 
     @Override
     public void init() {
@@ -31,6 +32,9 @@ public class Sample_8606 extends BaseOp {
 
         _claw = hardwareMap.get(Servo.class, "claw");
         _claw.setPosition(0.90d);
+
+        _gripper = hardwareMap.get(Servo.class, "gripper");
+        _gripper.setPosition(0.0d);
     }
 
     @Override
@@ -65,9 +69,14 @@ public class Sample_8606 extends BaseOp {
         else if (gamepad2.dpad_down) {
             _claw.setPosition(0.90d);
         }
-        else {
 
+        if (gamepad2.x) {
+            _gripper.setPosition(1.0d);
         }
+        else if (gamepad2.b) {
+            _gripper.setPosition(0.0d);
+        }
+
 
         _driveModule.move(gamepad1);
     }
