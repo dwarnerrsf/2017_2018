@@ -5,11 +5,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.Modules.MotorModule;
 
 
-public abstract class DriveModule {
-    private MotorModule _backLeftMotor = null;
-    private MotorModule _backRightMotor = null;
-    private MotorModule _frontLeftMotor = null;
-    private MotorModule _frontRightMotor = null;
+public class DriveModule {
+    private MotorModule _backLeftMotor = new MotorModule();
+    private MotorModule _backRightMotor = new MotorModule();
+    private MotorModule _frontLeftMotor = new MotorModule();
+    private MotorModule _frontRightMotor = new MotorModule();
 
     public void initialize(HardwareMap hardwareMap) {
         _backLeftMotor.initialize(hardwareMap, "backLeft", DcMotor.Direction.FORWARD);

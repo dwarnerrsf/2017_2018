@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.Modules.Drives.MecanumDriveModule;
 
 @TeleOp(name="*** DO NOT USE ***", group="Pushbot")
 public class BaseOp extends OpMode {
-    protected MecanumDriveModule _driveModule = null;
+    protected MecanumDriveModule _driveModule = new MecanumDriveModule();
 
     /*
      * Code to run ONCE when the driver hits INIT
