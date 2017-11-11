@@ -33,4 +33,21 @@ public class MotorModule {
     public void setPower(double power) {
         _motor.setPower(MathFunctions.clamp(-_maxPower, _maxPower, power));
     }
+
+    public void setTargetPosition(int position) {
+        forward();
+        _motor.setTargetPosition(position);
+    }
+
+    public void forward() {
+        _motor.setPower(1.0d);
+    }
+
+    public void reverse() {
+        _motor.setPower(-1.0d);
+    }
+
+    public void stop() {
+        _motor.setPower(0.0d);
+    }
 }
