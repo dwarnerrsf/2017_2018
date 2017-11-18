@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.Modules.Drives.MecanumDriveModule;
 
 
 @TeleOp(name="*** DO NOT USE ***", group="Pushbot")
-public class BaseOp extends OpMode {
+public abstract class BaseOp extends OpMode {
     protected MecanumDriveModule _driveModule = new MecanumDriveModule();
 
     /*
@@ -44,7 +44,5 @@ public class BaseOp extends OpMode {
     public void stop() {
     }
 
-    protected void initialize() {
-        _driveModule.initialize(hardwareMap);
-    }
+    protected abstract void initializeModules();
 }

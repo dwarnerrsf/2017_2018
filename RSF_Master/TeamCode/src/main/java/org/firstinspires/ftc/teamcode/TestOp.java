@@ -7,7 +7,12 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class TestOp extends BaseOp {
     @Override
     public void init() {
-        initialize();
+        initializeModules();
+    }
+
+    @Override
+    public void initializeModules() {
+
     }
 
     @Override
