@@ -1,10 +1,24 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.teamcode.Modules.Drives.DriveModule;
 
 
 @TeleOp(name="8606 Sample", group="Pushbot")
 public class Sample_8606 extends Team_8606_Op {
+    @Override
+    public void init() {
+        initializeModules();
+
+        _driveModule.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    @Override
+    public void start() {
+        _driveModule.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
 
     @Override
     public void loop() {
@@ -56,6 +70,13 @@ public class Sample_8606 extends Team_8606_Op {
             _lift.stop();
         }
 
+        if (gamepad1.left_bumper) {
+            _knocker.setPosition(0.80d);
+        }
+        else if (gamepad1.right_bumper) {
+            _knocker.setPosition(0.20d);
+        }
+
         _driveModule.move(gamepad1);
 
         if (gamepad2.left_stick_y > 0.10d || gamepad2.right_stick_y > 0.10d) {
@@ -64,6 +85,11 @@ public class Sample_8606 extends Team_8606_Op {
         else if (gamepad2.left_stick_y < -0.10d || gamepad2.right_stick_y < -0.10d) {
             gripClose();
         }
+
+        telemetry.addData("BackLeft: ", _driveModule.getCurrentPosition(DriveModule.DriveMotor.BackLeft));
+        telemetry.addData("BackRight: ", _driveModule.getCurrentPosition(DriveModule.DriveMotor.BackRight));
+        telemetry.addData("FrontLeft: ", _driveModule.getCurrentPosition(DriveModule.DriveMotor.FrontLeft));
+        telemetry.addData("FrontRight: ", _driveModule.getCurrentPosition(DriveModule.DriveMotor.FrontRight));
 
         telemetry.addData("Lift: ", _lift.getCurrentPosition());
         telemetry.addData("Position: ", currentPosition);

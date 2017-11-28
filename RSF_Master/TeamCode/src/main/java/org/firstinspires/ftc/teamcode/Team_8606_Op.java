@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Modules.MotorModule;
 
 
-@TeleOp(name="8606 Sample", group="Pushbot")
+@TeleOp(name="8606 Base", group="Pushbot")
 public class Team_8606_Op extends BaseOp {
     protected MotorModule _extender = new MotorModule();
     protected MotorModule _retractor = new MotorModule();
@@ -24,8 +25,12 @@ public class Team_8606_Op extends BaseOp {
 
     protected Servo _knocker = null;
 
+    protected ColorSensor _color = null;
+
     @Override
     public void initializeModules() {
+        _driveModule.initialize(hardwareMap);
+
         _extender.initialize(hardwareMap, "extender", DcMotor.Direction.FORWARD);
         _extender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -40,7 +45,7 @@ public class Team_8606_Op extends BaseOp {
 
         _lift.initialize(hardwareMap, "lift", DcMotor.Direction.REVERSE);
         _lift.setMaxPower(1.0d);
-        _lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        _lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         _claw = hardwareMap.get(Servo.class, "claw");
         _claw.setDirection(Servo.Direction.REVERSE);
@@ -57,15 +62,18 @@ public class Team_8606_Op extends BaseOp {
         _rightGlyph.setPosition(1.0d);
 
         _knocker = hardwareMap.get(Servo.class, "knocker");
+        _knocker.setDirection(Servo.Direction.REVERSE);
         _knocker.setPosition(0.0);
+
+        _color = hardwareMap.get(ColorSensor.class, "color");
     }
 
-    public void gripClose() {
+    public void gripOpen() {
         _leftGlyph.setPosition(0.40d);
         _rightGlyph.setPosition(0.50d);
     }
 
-    public void gripOpen() {
+    public void gripClose() {
         _leftGlyph.setPosition(0.0d);
         _rightGlyph.setPosition(0.0d);
     }
@@ -76,5 +84,14 @@ public class Team_8606_Op extends BaseOp {
 
     public void liftUp() {
         _lift.forward();
+    }
+
+    public void stop() {
+        _driveModule.stop(
+
+        );
+        _extender.setPower(0.0d);
+        _retractor.setPower(0.0d);
+        _lift.setPower(0.0d);
     }
 }

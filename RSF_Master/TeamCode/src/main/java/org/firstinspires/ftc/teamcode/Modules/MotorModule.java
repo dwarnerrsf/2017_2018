@@ -17,6 +17,10 @@ public class MotorModule {
         return _motor.getCurrentPosition();
     }
 
+    public DcMotor.RunMode getMode() {
+        return _motor.getMode();
+    }
+
     public void initialize(HardwareMap hardwareMap, String name, DcMotor.Direction direction) {
         _motor = hardwareMap.get(DcMotor.class, name);
         _motor.setDirection(direction);
