@@ -69,7 +69,7 @@ public class Team_8606_Op extends BaseOp {
     }
 
     public void gripOpen() {
-        _leftGlyph.setPosition(0.40d);
+        _leftGlyph.setPosition(0.50d);
         _rightGlyph.setPosition(0.50d);
     }
 

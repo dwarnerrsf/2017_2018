@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Modules.Drives.DriveModule;
 
 
-@TeleOp(name="8606 Sample", group="Pushbot")
-public class Sample_8606 extends Team_8606_Op {
+@TeleOp(name="Teleop_8606", group="Pushbot")
+public class Teleop_8606 extends Team_8606_Op {
     @Override
     public void init() {
         initializeModules();

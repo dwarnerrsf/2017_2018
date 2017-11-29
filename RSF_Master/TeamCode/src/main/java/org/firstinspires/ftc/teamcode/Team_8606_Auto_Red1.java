@@ -2,15 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Inputs.Dpad;
 import org.firstinspires.ftc.teamcode.Modules.Drives.DriveModule;
-import org.firstinspires.ftc.teamcode.Modules.MotorModule;
 
 
-@TeleOp(name="8606 Auto 01", group="Pushbot")
-public class Team_8606_Auto_Op_01 extends Team_8606_Op {
+@TeleOp(name="8606 Auto Red 1", group="Pushbot")
+public class Team_8606_Auto_Red1 extends Team_8606_Op {
     private int _stage = 0;
 
     @Override
@@ -55,12 +53,13 @@ public class Team_8606_Auto_Op_01 extends Team_8606_Op {
                 nextStage();
                 break;
             case 4:
-                if (_driveModule.getAveragePosition() > 2500) {
+                if (_driveModule.getCurrentPosition(DriveModule.DriveMotor.FrontLeft) < -3650) {
                     _driveModule.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                     nextStage();
                 }
                 else {
-                    _driveModule.setPower(0.20d);
+                    _driveModule.move(-0.20,-0.20);
+                    //_driveModule.setPower(0.20d);
                 }
                 break;
             case 5:
@@ -71,14 +70,14 @@ public class Team_8606_Auto_Op_01 extends Team_8606_Op {
             case 6:
                 _driveModule.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                if (_driveModule.getCurrentPosition(DriveModule.DriveMotor.FrontRight) > 1343) {
+                if (_driveModule.getCurrentPosition(DriveModule.DriveMotor.FrontRight) > 1400) {
                     _driveModule.stop();
                     _driveModule.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                     nextStage();
                 }
                 else {
-                    _driveModule.setMaxPower(0.20d);
-                    _driveModule.move(Dpad.Direction.Right);
+                    //_driveModule.setMaxPower(0.20d);
+                    _driveModule.move(-1.0d,1.0d);
                 }
                 break;
             case 7:
