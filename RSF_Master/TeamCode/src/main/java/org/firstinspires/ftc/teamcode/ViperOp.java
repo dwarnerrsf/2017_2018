@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -16,7 +17,15 @@ public class ViperOp extends BaseOp {
     private Servo _clawBlue = null ;
     private Servo _clawRed = null ;
 
+    private Servo _colorArm = null;
+    private ColorSensor _colorSensor = null;
+
     private int ArmPosition = 0;
+    private boolean clawBlueOpen = false;
+    private boolean clawRedOpen = false;
+
+    private double clawBluePosition = 0d;
+    private double clawRedPosition = 0d;
 
     @Override
     public void init() {
@@ -26,14 +35,16 @@ public class ViperOp extends BaseOp {
         _clawWrist = hardwareMap.servo.get("clawWrist");
         _clawRed = hardwareMap.servo.get("clawRed");
         _clawBlue = hardwareMap.servo.get("clawBlue");
+        _colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
+        _colorArm = hardwareMap.servo.get("colorArm");
 
     }
 
     @Override
     public void start() {
         _clawWrist.setPosition(0.0d); //set wrist to blue on bottom
-        _clawRed.setPosition(0.0d); //set red claw closed at start
-        _clawBlue.setPosition(0.0d); //set blue claw closed at start
+        _clawRed.setPosition(clawRedPosition); //set red claw closed at start
+        _clawBlue.setPosition(clawBluePosition); //set blue claw closed at start
 
         _ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
@@ -42,72 +53,84 @@ public class ViperOp extends BaseOp {
     public void loop() {
 
         //region init variables
-        _ArmMotor.setPower(.5d);
-        //endregion
-
-        //DRIVER #1 (GAMEPAD1)
-        //region close claws if moving
-        /* NOTE: need to think about this more before implementing
-        if(gamepad1.dpad_up||gamepad1.dpad_left||gamepad1.dpad_right||gamepad1.dpad_down)
-        {
-            _clawBlue.setPosition(1.0d) ;
-            _clawRed.setPosition(1.0d) ;
-        }
-        */
+        //_ArmMotor.setPower(.75d);
         //endregion
 
         //drive
+        //_driveModule.setPower(1.0d);
         _driveModule.move(gamepad1);
+        //keep colorArm straight up
+        _colorArm.setPosition(0.35d);
 
         //DRIVER #2 (GAMEPAD2)
         //region ArmMotor control
         //increment ArmPosition
-        if ( gamepad2.dpad_up)
-        {
-            ArmPosition = (ArmPosition> 2520) ? 2520 : ArmPosition++;
+        if (gamepad2.dpad_up) {
+            if (ArmPosition <= 3000){
+                ArmPosition += 12;
+            }
+            _ArmMotor.setPower(0.65d);
             _ArmMotor.getMotor().setTargetPosition(ArmPosition);
         }
         //set arm at back, high position
         if (gamepad2.dpad_down)
         {
-            ArmPosition = (ArmPosition< 0) ? 0 : ArmPosition--;
+            if(ArmPosition >= -500){
+                ArmPosition-=12;
+            }
+            _ArmMotor.setPower(.65d);
             _ArmMotor.getMotor().setTargetPosition(ArmPosition);
         }
+        //endregion
 
         //region Wrist control
         if (gamepad2.y) //blue goes to bottom
         {
+            _clawRed.setPosition(0.0d);
+            _clawBlue.setPosition(0.0d);
             _clawWrist.setPosition(0.0d);
 
         }
         else if (gamepad2.a) //red goes to bottom
         {
-            _clawWrist.setPosition(0.9d);
+            _clawRed.setPosition(0.0d);
+            _clawBlue.setPosition(0.0d);
+            _clawWrist.setPosition(1.0d);
         }
         //endregion
 
         //region clawRed controls
         if (gamepad2.left_trigger > 0.7d)
         {
-            _clawRed.setPosition(0.0d);
+            if(clawRedPosition>0.0d)
+                clawRedPosition-=0.0125d;
+            _clawRed.setPosition(clawRedPosition);
         }
         else if (gamepad2.left_bumper)
         {
-            _clawRed.setPosition(1.0d);
+            if(clawRedPosition<1.0d)
+                clawRedPosition+=0.0125d;
+            _clawRed.setPosition(clawRedPosition);
         }
         //endregion
 
         //region clawBlue controls
         if (gamepad2.right_trigger > 0.7d)
         {
-            _clawBlue.setPosition(0.0d);
+            if(clawBluePosition>0.0d)
+                clawBluePosition-=0.0125d;
+            _clawBlue.setPosition(clawBluePosition);
         }
         else if (gamepad2.right_bumper)
         {
-            _clawBlue.setPosition(1.0d) ;
+            if(clawBluePosition<1.0d)
+                clawBluePosition+=0.0125d;
+            _clawBlue.setPosition(clawBluePosition) ;
         }
         //endregion
 
         telemetry.addData("Arm Position", _ArmMotor.getMotor().getCurrentPosition());
+        telemetry.addData("clawRedPosition", clawRedPosition);
+        telemetry.addData("clawBluePosition", clawBluePosition);
     }
 }
