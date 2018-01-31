@@ -31,7 +31,6 @@ public class ViperBlue1 extends BaseOp{
 
     @Override
     public void init() {
-        initialize();
         _ArmMotor.initialize(hardwareMap, "Arm", DcMotor.Direction.REVERSE);
         _ArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         _clawWrist = hardwareMap.servo.get("clawWrist");
@@ -93,7 +92,7 @@ public class ViperBlue1 extends BaseOp{
                 }
                 else
                 {
-                    _driveModule.move(0.0d, 0.0d);
+                    _driveModule.stop();
                     timeOffSet = time;
                     step++;
                 }
@@ -109,15 +108,15 @@ public class ViperBlue1 extends BaseOp{
                     step++;
                 }
                 break;
-            case 5: //rotate clockwise for 0.15 secs
-                if (time < timeOffSet + 0.15d)
+            case 5: //move sideways for 2.0 secs
+                if (time < timeOffSet + 2.0d)
                 {
                     _driveModule.setMaxPower(1.0d);
-                    _driveModule.move(1.0d, -1.0d);
+                    _driveModule.move(Dpad.Direction.Right);
                 }
                 else
                 {
-                    _driveModule.move(0.0d, 0.0d);
+                    _driveModule.stop();
                     timeOffSet = time;
                     step++;
                 }
@@ -129,7 +128,7 @@ public class ViperBlue1 extends BaseOp{
                 }
                 else
                 {
-                    _driveModule.move(0.0d, 0.0d);
+                    _driveModule.stop();
                     timeOffSet = time;
                     step++;
                 }
@@ -156,7 +155,7 @@ public class ViperBlue1 extends BaseOp{
                 }
                 else
                 {
-                    _driveModule.move(0.0d, 0.0d);
+                    _driveModule.stop();
                     step++;
                     timeOffSet = time;
                 }
@@ -171,7 +170,7 @@ public class ViperBlue1 extends BaseOp{
                 }
                 else
                 {
-                    _driveModule.move(0.0d, 0.0d);
+                    _driveModule.stop();
                     timeOffSet = time;
                     step++;
                 }

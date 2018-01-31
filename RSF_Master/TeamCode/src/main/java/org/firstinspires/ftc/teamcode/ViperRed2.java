@@ -31,7 +31,6 @@ public class ViperRed2 extends BaseOp{
 
     @Override
     public void init() {
-        initialize();
         _ArmMotor.initialize(hardwareMap, "Arm", DcMotor.Direction.REVERSE);
         _ArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         _clawWrist = hardwareMap.servo.get("clawWrist");
