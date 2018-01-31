@@ -6,10 +6,41 @@ import org.firstinspires.ftc.teamcode.Modules.MotorModule;
 
 
 public class DriveModule {
+    public enum DriveMotor {
+        BackLeft,
+        BackRight,
+        FrontLeft,
+        FrontRight
+    }
+
     private MotorModule _backLeftMotor = new MotorModule();
     private MotorModule _backRightMotor = new MotorModule();
     private MotorModule _frontLeftMotor = new MotorModule();
     private MotorModule _frontRightMotor = new MotorModule();
+
+    public int getAveragePosition() {
+        return (_backLeftMotor.getCurrentPosition() + _backRightMotor.getCurrentPosition() + _frontLeftMotor.getCurrentPosition() + _frontRightMotor.getCurrentPosition()) / 4;
+    }
+
+    public int getCurrentPosition(DriveMotor motor) {
+        switch (motor) {
+            case BackLeft:
+                return _backLeftMotor.getCurrentPosition();
+            case BackRight:
+                return _backRightMotor.getCurrentPosition();
+            case FrontLeft:
+                return _frontLeftMotor.getCurrentPosition();
+            case FrontRight:
+                return _frontRightMotor.getCurrentPosition();
+            default:
+                return 0;
+        }
+    }
+
+    public boolean getMode(DcMotor.RunMode mode) {
+        return (_backLeftMotor.getMode() == mode && _backRightMotor.getMode() == mode
+            && _frontLeftMotor.getMode() == mode && _frontRightMotor.getMode() == mode);
+    }
 
     public void initialize(HardwareMap hardwareMap) {
         _backLeftMotor.initialize(hardwareMap, "backLeft", DcMotor.Direction.FORWARD);

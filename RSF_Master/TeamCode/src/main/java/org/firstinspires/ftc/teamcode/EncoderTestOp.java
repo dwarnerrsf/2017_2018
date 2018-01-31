@@ -2,18 +2,24 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
 import org.firstinspires.ftc.teamcode.Modules.Drives.MecanumDriveModule;
+import org.firstinspires.ftc.teamcode.Modules.MotorModule;
 
 
-@TeleOp(name="*** DO NOT USE ***", group="Pushbot")
-public abstract class BaseOp extends OpMode {
-    protected MecanumDriveModule _driveModule = new MecanumDriveModule();
+@TeleOp(name="Encoder Test", group="Pushbot")
+public class EncoderTestOp extends OpMode {
+    public MotorModule _motor = new MotorModule();
 
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init() {
+        _motor.initialize(hardwareMap, "motor", DcMotorSimple.Direction.FORWARD);
+        _motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     /*
@@ -28,6 +34,8 @@ public abstract class BaseOp extends OpMode {
      */
     @Override
     public void start() {
+        _motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        _motor.setPower(1.0d);
     }
 
     /*
@@ -35,6 +43,9 @@ public abstract class BaseOp extends OpMode {
      */
     @Override
     public void loop() {
+        _motor.setTargetPosition(1680);
+
+        telemetry.addData("Position", _motor.getCurrentPosition());
     }
 
     /*
@@ -43,6 +54,4 @@ public abstract class BaseOp extends OpMode {
     @Override
     public void stop() {
     }
-
-    protected abstract void initializeModules();
 }

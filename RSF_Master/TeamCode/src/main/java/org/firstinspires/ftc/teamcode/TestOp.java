@@ -6,6 +6,16 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name="TestOp", group="Pushbot")
 public class TestOp extends BaseOp {
     @Override
+    public void init() {
+        initializeModules();
+    }
+
+    @Override
+    public void initializeModules() {
+
+    }
+
+    @Override
     public void loop() {
         if (gamepad1.a) {
             _driveModule.setMaxPower(0.25d);
