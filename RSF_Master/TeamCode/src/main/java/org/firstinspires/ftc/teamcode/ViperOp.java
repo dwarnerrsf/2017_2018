@@ -127,6 +127,35 @@ public class ViperOp extends BaseOp {
             _clawBlue.setPosition(clawBluePosition) ;
         }
         //endregion
+        
+        //region relic arm
+        if (gamepad2.y) {
+            _relicArm.forward();
+        }
+        else if (gamepad2.a) {
+            _relicArm.reverse();
+        }
+        else {
+            _relicArm.stop();
+        }
+
+        if (gamepad2.dpad_up) {
+            _wrist.setPosition(0.850d);
+        }
+        else if (gamepad2.dpad_down) {
+            _wrist.setPosition(0.00d);
+        }
+        
+        if (gamepad2.dpad_right) {
+            _claw.setPosition(0.660d);
+        }
+        if (gamepad2.b) {
+            _claw.setPosition(1.0d);
+        }
+        else if (gamepad2.x) {
+            _claw.setPosition(0.00d);
+        }
+        //endregion
 
         telemetry.addData("Arm Position", _ArmMotor.getMotor().getCurrentPosition());
         telemetry.addData("clawRedPosition", clawRedPosition);
