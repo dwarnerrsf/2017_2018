@@ -17,6 +17,10 @@ public class ViperOp extends BaseOp {
     private Servo _clawBlue = null ;
     private Servo _clawRed = null ;
 
+    private MotorModule _relicArm = new MotorModule();
+    private Servo _relicWrist = null ;
+    private Servo _relicClaw = null ;
+
     private Servo _colorArm = null;
     private ColorSensor _colorSensor = null;
 
@@ -36,6 +40,11 @@ public class ViperOp extends BaseOp {
         _clawBlue = hardwareMap.servo.get("clawBlue");
         _colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
         _colorArm = hardwareMap.servo.get("colorArm");
+
+        _relicArm.initialize(hardwareMap, "relicArm", DcMotor.Direction.FORWARD);
+        _relicWrist = hardwareMap.servo.get("relicWrist");
+        _relicClaw = hardwareMap.servo.get("relicClaw");
+
 
     }
 
@@ -129,32 +138,32 @@ public class ViperOp extends BaseOp {
         //endregion
         
         //region relic arm
-        if (gamepad2.y) {
+        if (gamepad2.left_stick_y > 0.75d) {
             _relicArm.forward();
         }
-        else if (gamepad2.a) {
+        else if (gamepad2.left_stick_y < -0.75d) {
             _relicArm.reverse();
         }
         else {
             _relicArm.stop();
         }
 
-        if (gamepad2.dpad_up) {
-            _wrist.setPosition(0.850d);
+        if (gamepad2.right_stick_y > 0.75d) {
+            _relicWrist.setPosition(0.850d);
         }
-        else if (gamepad2.dpad_down) {
-            _wrist.setPosition(0.00d);
+        else if (gamepad2.right_stick_y < 0.75d) {
+            _relicWrist.setPosition(0.00d);
         }
         
-        if (gamepad2.dpad_right) {
-            _claw.setPosition(0.660d);
+        if (gamepad1.b) {
+            if(_relicClaw.getPosition() < 1.0d)
+                _relicClaw.setPosition(_relicClaw.getPosition()+ 0.5d);
         }
-        if (gamepad2.b) {
-            _claw.setPosition(1.0d);
+        if (gamepad1.x) {
+            if(_relicClaw.getPosition() > 0.0d)
+                _relicClaw.setPosition(_relicClaw.getPosition()- 0.5d);
         }
-        else if (gamepad2.x) {
-            _claw.setPosition(0.00d);
-        }
+
         //endregion
 
         telemetry.addData("Arm Position", _ArmMotor.getMotor().getCurrentPosition());
