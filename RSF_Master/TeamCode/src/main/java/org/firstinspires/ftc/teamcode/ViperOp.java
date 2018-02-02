@@ -44,8 +44,8 @@ public class ViperOp extends BaseOp {
         _relicArm.initialize(hardwareMap, "relicArm", DcMotor.Direction.FORWARD);
         _relicWrist = hardwareMap.servo.get("relicWrist");
         _relicClaw = hardwareMap.servo.get("relicClaw");
-
-
+        
+        _driveModule.initialize(hardwareMap);s
     }
 
     @Override
