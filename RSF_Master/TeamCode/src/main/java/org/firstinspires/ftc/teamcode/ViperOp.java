@@ -55,6 +55,8 @@ public class ViperOp extends BaseOp {
         _clawBlue.setPosition(clawBluePosition); //set blue claw closed at start
 
         _ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        _relicClaw.setPosition(0.0d);
+        _relicWrist.setPosition(0.0d);
     }
 
     @Override
@@ -149,10 +151,10 @@ public class ViperOp extends BaseOp {
         }
 
         if (gamepad2.right_stick_y > 0.75d) {
-            _relicWrist.setPosition(0.850d);
-        }
-        else if (gamepad2.right_stick_y < 0.75d) {
             _relicWrist.setPosition(0.00d);
+        }
+        else if (gamepad2.right_stick_y < -0.75d) {
+            _relicWrist.setPosition(0.85d);
         }
         
         if (gamepad1.b) {
