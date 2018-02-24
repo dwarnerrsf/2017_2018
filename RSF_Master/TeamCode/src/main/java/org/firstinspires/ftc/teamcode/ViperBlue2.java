@@ -62,8 +62,6 @@ public class ViperBlue2 extends BaseOp{
 
     @Override
     public void loop() {
-
-
         switch (step)
         {
             case 1: //lower color arm for 2 secs
@@ -87,19 +85,24 @@ public class ViperBlue2 extends BaseOp{
                 }
                 break;
             case 3: //move forward for .5 seconds
-                if (time < timeOffSet + 0.5d)
+                if (time < timeOffSet + 2.20d)
                 {
+                    if (time > timeOffSet + 0.50d)
+                    {
+                        _colorArm.setPosition(0.45d);
+                    }
+
                     _driveModule.move(1.0d, 1.0d);
                 }
                 else
                 {
                     _driveModule.stop();
                     timeOffSet = time;
-                    step++;
+                    step += 2;
                 }
                 break;
             case 4: //lift color arm for 2 secs
-                if (time < timeOffSet + 2.0d)
+                /*if (time < timeOffSet + 2.0d)
                 {
                     _colorArm.setPosition(0.45d);
                 }
@@ -107,10 +110,10 @@ public class ViperBlue2 extends BaseOp{
                 {
                     timeOffSet = time;
                     step++;
-                }
+                }*/
                 break;
             case 5: //rotate counterclockwise for 1.5 secs
-                if (time < timeOffSet + 1.5d)
+                if (time < timeOffSet + 0.90d)
                 {
                     _driveModule.setMaxPower(1.0d);
                     _driveModule.move(-1.0d, 1.0d);
@@ -123,9 +126,9 @@ public class ViperBlue2 extends BaseOp{
                 }
                 break;
             case 6: //move forward for 1.0 secs
-                if (time < timeOffSet + 1.0d)
+                if (time < timeOffSet + 0.25d)
                 {
-                    _driveModule.move(1.0d, 1.0d);
+                    _driveModule.move(0.50d, 0.50d);
                 }
                 else
                 {
@@ -149,16 +152,15 @@ public class ViperBlue2 extends BaseOp{
                 }
                 break;
             case 8: //move forward for 0.5 seconds
-                if (time < timeOffSet + 0.5d)
+                if (time < timeOffSet + 0.50d)
                 {
-                    _driveModule.setMaxPower(0.75d);
-                    _driveModule.move(1.0d, 1.0d);
+                    _driveModule.move(-0.20d, -0.20d);
                 }
                 else
                 {
                     _driveModule.stop();
-                    step++;
                     timeOffSet = time;
+                    step++;
                 }
                 break;
             //

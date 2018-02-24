@@ -62,8 +62,6 @@ public class ViperRed2 extends BaseOp{
 
     @Override
     public void loop() {
-
-
         switch (step)
         {
             case 1: //lower color arm for 2 secs
@@ -80,26 +78,31 @@ public class ViperRed2 extends BaseOp{
             case 2: // is color sensor looking at red
                 if (_colorSensor.red() >= 70) {
                     //looking at red, move backward to knock off blue
-                    step=3;
+                    step = 3;
                 }else{
                     //looking at blue move forward to knock off blue
-                    step=13;
+                    step = 13;
                 }
                 break;
             case 3: //move backward for .5 seconds
-                if (time < timeOffSet + 0.5d)
+                if (time < timeOffSet + 2.20d)
                 {
+                    if (time > timeOffSet + 0.50d)
+                    {
+                        _colorArm.setPosition(0.45d);
+                    }
+
                     _driveModule.move(-1.0d, -1.0d);
                 }
                 else
                 {
                     _driveModule.move(0.0d, 0.0d);
                     timeOffSet = time;
-                    step++;
+                    step += 2;
                 }
                 break;
             case 4: //lift color arm for 2 secs
-                if (time < timeOffSet + 2.0d)
+                /*if (time < timeOffSet + 2.0d)
                 {
                     _colorArm.setPosition(0.45d);
                 }
@@ -107,12 +110,13 @@ public class ViperRed2 extends BaseOp{
                 {
                     timeOffSet = time;
                     step++;
-                }
+                }*/
                 break;
             case 5: //move backward for 1.2 secs
-                if (time < timeOffSet + 1.2d)
+                if (time < timeOffSet + 0.90d)
                 {
-                    _driveModule.move(-1.0d, -1.0d);
+                    _driveModule.setMaxPower(1.0d);
+                    _driveModule.move(-1.0d, 1.0d);
                 }
                 else
                 {
@@ -122,10 +126,10 @@ public class ViperRed2 extends BaseOp{
                 }
                 break;
             case 6: //rotate counterclockwise for 1.5 secs
-                if (time < timeOffSet + 1.5d)
+                if (time < timeOffSet + 0.40d)
                 {
                     _driveModule.setMaxPower(1.0d);
-                    _driveModule.move(-1.0d, 1.0d);
+                    _driveModule.move(0.20d, 0.20d);
                 }
                 else
                 {
@@ -149,10 +153,10 @@ public class ViperRed2 extends BaseOp{
                 }
                 break;
             case 8: //move forward for 1.0 seconds
-                if (time < timeOffSet + 1.0d)
+                if (time < timeOffSet + 0.50d)
                 {
                     _driveModule.setMaxPower(0.75d);
-                    _driveModule.move(1.0d, 1.0d);
+                    _driveModule.move(-0.20d, -0.20d);
                 }
                 else
                 {
@@ -202,6 +206,11 @@ public class ViperRed2 extends BaseOp{
                 break;
   */
         }
+
+        telemetry.addData("Step: ", step);
+        telemetry.addData("Time: ", time);
+        telemetry.addData("Time Offset: ", timeOffSet);
+
         telemetry.addData("Arm Position", _ArmMotor.getMotor().getCurrentPosition());
         //telemetry.addData("clawRedPosition", clawRedPosition);
         //telemetry.addData("clawBluePosition", clawBluePosition);
