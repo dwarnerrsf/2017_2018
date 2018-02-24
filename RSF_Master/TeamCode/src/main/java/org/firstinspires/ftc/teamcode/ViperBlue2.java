@@ -43,6 +43,7 @@ public class ViperBlue2 extends BaseOp{
         _clawBlue.setPosition(0.0d) ;
         _clawRed.setPosition(0.0d) ;
 
+        _driveModule.initialize(hardwareMap);
     }
 
     @Override
@@ -92,7 +93,7 @@ public class ViperBlue2 extends BaseOp{
                 }
                 else
                 {
-                    _driveModule.move(0.0d, 0.0d);
+                    _driveModule.stop();
                     timeOffSet = time;
                     step++;
                 }
@@ -116,7 +117,7 @@ public class ViperBlue2 extends BaseOp{
                 }
                 else
                 {
-                    _driveModule.move(0.0d, 0.0d);
+                    _driveModule.stop();
                     timeOffSet = time;
                     step++;
                 }
@@ -128,7 +129,7 @@ public class ViperBlue2 extends BaseOp{
                 }
                 else
                 {
-                    _driveModule.move(0.0d, 0.0d);
+                    _driveModule.stop();
                     timeOffSet = time;
                     step++;
                 }
@@ -155,7 +156,7 @@ public class ViperBlue2 extends BaseOp{
                 }
                 else
                 {
-                    _driveModule.move(0.0d, 0.0d);
+                    _driveModule.stop();
                     step++;
                     timeOffSet = time;
                 }
@@ -170,7 +171,7 @@ public class ViperBlue2 extends BaseOp{
                 }
                 else
                 {
-                    _driveModule.move(0.0d, 0.0d);
+                    _driveModule.stop();
                     timeOffSet = time;
                     step++;
                 }

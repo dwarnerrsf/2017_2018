@@ -44,5 +44,5 @@ public abstract class BaseOp extends OpMode {
     public void stop() {
     }
 
-    protected abstract void initializeModules();
+    //protected abstract void initializeModules();
 }

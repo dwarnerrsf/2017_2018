@@ -43,6 +43,7 @@ public class ViperRed2 extends BaseOp{
         _clawBlue.setPosition(0.0d) ;
         _clawRed.setPosition(0.0d) ;
 
+        _driveModule.initialize(hardwareMap);
     }
 
     @Override
